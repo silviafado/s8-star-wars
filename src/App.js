@@ -1,23 +1,26 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import ShipsList from './components/shipsList/ShipsList';
+import ShipProfile from './components/shipProfile/ShipProfile'
 
 function App() {
+
+  const [list, setList] = useState([]);
+
+  const getData = async () => {
+    const results = await axios(
+      'https://swapi.dev/api/starships',
+    );
+    console.log(results);
+    setList(results.data.results);
+  };
+  getData();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ShipsList list={list} />
+      <ShipProfile list={list} />
     </div>
   );
 }
