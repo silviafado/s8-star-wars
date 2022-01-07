@@ -3,7 +3,9 @@ const Home = () => {
 
     return (
         <>
-            "hola"
+            <a href="/list/">
+                <button>Enter Star Wars experience</button>
+            </a>
         </>
     )
 }

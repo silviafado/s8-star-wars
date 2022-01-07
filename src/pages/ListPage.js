@@ -1,9 +1,9 @@
 import ShipList from '../components/shipsList/ShipsList';
 
-const ListPage = () => {
+const ListPage = ({ list }) => {
 
     return (
-        <ShipList />
+        <ShipList list={list} />
 
     )
 }

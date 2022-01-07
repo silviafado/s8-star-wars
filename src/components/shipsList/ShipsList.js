@@ -1,30 +1,6 @@
-import { useState, useEffect } from 'react';
 import { StylesList } from './ShipListStyles';
-import axios from 'axios';
-import ShipProfile from '../shipProfile/ShipProfile';
 
-
-const ShipsList = () => {
-
-    const [list, setList] = useState([]);
-    const [nextPage, setNextPage] = useState(
-        "https://swapi.py4e.com/api/starships/?page=1"
-    );
-
-    useEffect(() => {
-        axios({
-            url: nextPage,
-        })
-            .then((response) => {
-                console.log(response.data.results);
-                setList(response.data.results);
-                setNextPage(response.data.next);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [setList, setNextPage]);
-
+const ShipsList = ({ list }) => {
 
     const formattedList = list.map((ship, id) =>
         <li key={id}>
@@ -38,12 +14,9 @@ const ShipsList = () => {
     console.log(list);
 
     return (
-        <>
-            <StylesList list={list}>
-                {formattedList}
-            </StylesList>
-            <ShipProfile list={list} />
-        </>
+        <StylesList list={list}>
+            {formattedList}
+        </StylesList>
     )
 }
 
