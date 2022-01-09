@@ -3,6 +3,10 @@ import styled from "styled-components";
 // General styling
 export const StylesProfile = styled.div`
     color: white;
+        margin: 70px;
+    @media (max-width: 700px) {
+        margin: 50px;
+    }
 `
 
 export const StylesDiv = styled.div`
@@ -19,6 +23,7 @@ export const StylesSection = styled.section`
 `
 
 export const StylesImg = styled.img`
+    max-width: 100%;
     @media (max-width: 700px) {
     width: 100%;
     }

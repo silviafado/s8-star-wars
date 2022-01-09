@@ -25,8 +25,8 @@ const Path = () => {
 
     return (
         <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<Home />} />
+            <Routes list={list} >
+                <Route exact path="/" element={<Home list={list} />} />
                 <Route path="/list/" element={<ListPage list={list} />} />
                 <Route path="/starships/:id" element={<ShipPage list={list} />} />
                 <Route path="*" element={() => <div>404</div>} />

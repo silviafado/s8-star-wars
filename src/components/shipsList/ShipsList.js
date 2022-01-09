@@ -1,15 +1,16 @@
-import { StylesList, StylesLink, StylesLi, StylesParag } from './ShipListStyles';
-import { GlobalStyle, StylesHeader, StylesLogo } from '../../styled';
+import { StylesList, StylesLi, StylesParag, StylesButton } from './ShipListStyles';
+import { StylesHeader, StylesLogo } from '../../styled';
+import { Link } from 'react-router-dom';
 import logo from '../../assets/logo_starwars.png'
 
 const ShipsList = ({ list }) => {
 
     const formattedList = list.map((ship, id) =>
         <StylesLi key={id}>
-            <StylesLink href={`/starships/${id}`} key={id} ship={ship}>
+            <Link to={`/starships/${id}`} key={id} ship={ship}>
                 <StylesParag>Name: {ship.name.toUpperCase()}</StylesParag>
                 <StylesParag>Model: {ship.model}</StylesParag>
-            </StylesLink>
+            </Link>
         </StylesLi>
     )
 
@@ -17,14 +18,16 @@ const ShipsList = ({ list }) => {
 
     return (
         <>
-            <GlobalStyle />
             <StylesHeader>
                 <StylesLogo src={logo} alt="logo" />
             </StylesHeader>
             <StylesList list={list}>
                 {formattedList}
             </StylesList>
-            <button>View more...</button>
+
+            <StylesButton>
+                <button>View more...</button>
+            </StylesButton>
         </>
     )
 }

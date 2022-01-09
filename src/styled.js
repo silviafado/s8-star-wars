@@ -7,10 +7,9 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-image: url(${back});
         background-size: cover;
-        margin: 70px;
+        margin: 0px;
         @media (max-width: 700px) {
             background-image: url(${back2});
-            margin: 50px;
         }
     }
 `
@@ -18,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
 export const StylesHeader = styled.header`
     display: flex;
     justify-content: center;
-    padding-bottom: 30px;
+    padding: 30px;
 `
 
 export const StylesLogo = styled.img`

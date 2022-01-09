@@ -1,22 +1,46 @@
-import { useParams } from "react-router";
+import { useState } from 'react';
+import { useParams } from 'react-router';
 import { GlobalStyle, StylesHeader, StylesLogo } from '../styled'
 import { StylesProfile, StylesDiv, StylesSection, StylesImg } from '../components/shipProfile/ShipProfileStyles';
-import logo from '../assets/logo_starwars.png'
+import { StylesButton } from '../components/shipsList/ShipListStyles';
+import NavBar from '../components/navbar/NavBar';
+import logo from '../assets/logo_starwars.png';
+import corvette from '../assets/CR90-corvette.jpg';
+import rebel from '../assets/rebel-transport.jpg';
 
 const ShipPage = ({ list }) => {
 
+    const [num, setNum] = useState();
+
     let { id } = useParams();
+
+    console.log(id)
+
+    const next = id < 10 ? parseInt(id) + 1 : id;
+    console.log(next);
     const ship = { ...list[id] };
-    console.log(ship.url);
+    console.log(ship);
+    const nextShip = { ...list[next] };
+    console.log(nextShip);
+
+    const shipNum = async () => {
+        const num = await ship.url.replace(/[^\d]/g, '').slice(1);
+        console.log(num);
+        setNum(num)
+        return num;
+    }
+
+    shipNum();
 
     return (
-        <div id={id} ship={ship}>
+        <div key={id} id={id} ship={ship} list={list}>
             <GlobalStyle />
+            <NavBar id={id} list={list} />
             <StylesHeader>
                 <StylesLogo src={logo} alt="logo" />
             </StylesHeader>
-            <StylesProfile key={id} >
-                <header><StylesImg src={`https://starwars-visualguide.com/assets/img/starships/${id}.jpg`} alt={`Photo ${ship.name}.`} /></header>
+            <StylesProfile key={id} id={id} ship={ship}>
+                <header><StylesImg src={`https://starwars-visualguide.com/assets/img/starships/${num}.jpg`} onError={e => { ship.name === 'CR90 corvette' ? e.target.src = corvette : e.target.src = rebel }} alt={`Photo ${ship.name}.`} /></header>
                 <main>
                     <p>{ship.name}</p>
                     <p>{ship.description}</p>
@@ -33,6 +57,9 @@ const ShipPage = ({ list }) => {
                         </StylesSection>
                     </StylesDiv>
                 </main>
+                <StylesButton id={next} ship={nextShip}>
+                    <a href={`/starships/${next}`} id={next} ship={nextShip}><button>Next</button></a>
+                </StylesButton>
             </StylesProfile>
         </div>
     )
