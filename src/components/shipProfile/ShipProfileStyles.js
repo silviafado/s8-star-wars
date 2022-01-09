@@ -3,15 +3,12 @@ import styled from "styled-components";
 // General styling
 export const StylesProfile = styled.div`
     color: white;
-        margin: 70px;
-    @media (max-width: 700px) {
-        margin: 50px;
-    }
+        margin: 15%;
 `
 
 export const StylesDiv = styled.div`
     display: flex;
-    @media (max-width: 700px) {
+    @media (max-width: 820px) {
         flex-direction: column;
     }
 `

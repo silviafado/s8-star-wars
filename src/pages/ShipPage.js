@@ -7,6 +7,7 @@ import NavBar from '../components/navbar/NavBar';
 import logo from '../assets/logo_starwars.png';
 import corvette from '../assets/CR90-corvette.jpg';
 import rebel from '../assets/rebel-transport.jpg';
+import star from '../assets/star-destroyer.jpeg';
 
 const ShipPage = ({ list }) => {
 
@@ -32,6 +33,22 @@ const ShipPage = ({ list }) => {
 
     shipNum();
 
+    console.log(ship.name);
+
+    const photoSrc = e => {
+        switch (ship.name) {
+            case 'CR90 corvette':
+                e.target.src = corvette;
+                break;
+            case 'Star Destroyer':
+                e.target.src = star;
+                break;
+            case 'Rebel transport':
+                e.target.src = rebel;
+                break;
+        }
+    }
+
     return (
         <div key={id} id={id} ship={ship} list={list}>
             <GlobalStyle />
@@ -40,7 +57,7 @@ const ShipPage = ({ list }) => {
                 <StylesLogo src={logo} alt="logo" />
             </StylesHeader>
             <StylesProfile key={id} id={id} ship={ship}>
-                <header><StylesImg src={`https://starwars-visualguide.com/assets/img/starships/${num}.jpg`} onError={e => { ship.name === 'CR90 corvette' ? e.target.src = corvette : e.target.src = rebel }} alt={`Photo ${ship.name}.`} /></header>
+                <header><StylesImg src={`https://starwars-visualguide.com/assets/img/starships/${num}.jpg`} onError={photoSrc} alt={`Photo ${ship.name}.`} /></header>
                 <main>
                     <p>{ship.name}</p>
                     <p>{ship.description}</p>
