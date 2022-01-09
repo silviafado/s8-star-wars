@@ -9,25 +9,24 @@ import ShipPage from '../pages/ShipPage';
 const Path = () => {
 
     const [list, setList] = useState([]);
-    const [nextPage, setNextPage] = useState("https://swapi.py4e.com/api/starships/?page=1");
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
-        axios({ url: nextPage })
+        axios({ url: `https://swapi.py4e.com/api/starships/?page=${page}` })
             .then((response) => {
                 console.log(response.data.results);
                 setList(response.data.results);
-                setNextPage(response.data.next);
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [setList, setNextPage]);
+    }, [page]);
 
     return (
         <BrowserRouter>
             <Routes list={list} >
                 <Route exact path="/" element={<Home list={list} />} />
-                <Route path="/list/" element={<ListPage list={list} />} />
+                <Route path="/list/" element={<ListPage list={list} page={page} setPage={setPage} />} />
                 <Route path="/starships/:id" element={<ShipPage list={list} />} />
                 <Route path="*" element={() => <div>404</div>} />
             </Routes>

@@ -27,8 +27,10 @@ export const StylesLi = styled.li`
 export const StylesParag = styled.p`
     margin: 8px;
 `
+
 export const StylesButton = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     padding-top: 10px;
+    margin: 40px;
 `

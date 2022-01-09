@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { GlobalStyle, StylesHeader, StylesLogo } from '../styled'
 import { StylesProfile, StylesDiv, StylesSection, StylesImg } from '../components/shipProfile/ShipProfileStyles';
-import { StylesButton } from '../components/shipsList/ShipListStyles';
 import NavBar from '../components/navbar/NavBar';
 import logo from '../assets/logo_starwars.png';
 import corvette from '../assets/CR90-corvette.jpg';
@@ -14,15 +13,8 @@ const ShipPage = ({ list }) => {
     const [num, setNum] = useState();
 
     let { id } = useParams();
-
-    console.log(id)
-
-    const next = id < 10 ? parseInt(id) + 1 : id;
-    console.log(next);
     const ship = { ...list[id] };
     console.log(ship);
-    const nextShip = { ...list[next] };
-    console.log(nextShip);
 
     const shipNum = async () => {
         const num = await ship.url.replace(/[^\d]/g, '').slice(1);
@@ -33,9 +25,8 @@ const ShipPage = ({ list }) => {
 
     shipNum();
 
-    console.log(ship.name);
-
     const photoSrc = e => {
+        // eslint-disable-next-line
         switch (ship.name) {
             case 'CR90 corvette':
                 e.target.src = corvette;
@@ -74,9 +65,6 @@ const ShipPage = ({ list }) => {
                         </StylesSection>
                     </StylesDiv>
                 </main>
-                <StylesButton id={next} ship={nextShip}>
-                    <a href={`/starships/${next}`} id={next} ship={nextShip}><button>Next</button></a>
-                </StylesButton>
             </StylesProfile>
         </div>
     )
