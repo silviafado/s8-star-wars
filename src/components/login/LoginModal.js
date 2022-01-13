@@ -1,101 +1,137 @@
-import React from 'react';
-import ReactModalLogin from 'react-modal-login';
+import React, { useState } from 'react';
 import 'react-modal-login/dist/react-modal-login.css';
+import CloseButton from 'react-bootstrap/CloseButton';
+import { StylesModal, StylesLogSelect, StylesLogSelect2 } from './LoginModalStyles';
+import '../../App.css';
 
-import { facebookConfig, googleConfig } from './social-config';
 
-class LoginModal extends React.Component {
-    constructor(props) {
-        super(props);
+const LoginModal = () => {
+    const [showModal, setShowModal] = useState(false);
+    const [showSignIn, setShowSignIn] = useState(true);
+    const [showSignUp, setShowSignUp] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-        this.state = {
-            showModal: false,
-            loading: false,
-            error: null
-        };
-    }
 
-    openModal() {
-        this.setState({
-            showModal: true
-        });
-    }
+    const openModal = () => { setShowModal(true) };
+    const closeModal = () => {
+        setShowModal(false);
+        setError(null);
+    };
+    const openSignIn = () => {
+        setShowSignIn(true);
+        setShowSignUp(false);
+    };
+    const openSignUp = () => {
+        setShowSignUp(true);
+        setShowSignIn(false);
+    };
 
-    closeModal() {
-        this.setState({
-            showModal: false,
-            error: null
-        });
-    }
 
-    onLoginSuccess(method, response) {
+    const onLoginSuccess = (method, response) => {
         console.log("logged successfully with " + method);
     }
 
-    onLoginFail(method, response) {
+    const onLoginFail = (method, response) => {
         console.log("logging failed with " + method);
-        this.setState({
-            error: response
-        });
+        setError({ error: response });
     }
 
-    startLoading() {
-        this.setState({
-            loading: true
-        });
+    const startLoading = () => {
+        setLoading(true);
     }
 
-    finishLoading() {
-        this.setState({
-            loading: false
-        });
+    const finishLoading = () => {
+        setLoading(false);
     }
 
-    afterTabsChange() {
-        this.setState({
-            error: null
-        });
+    const afterTabsChange = () => {
+        setError(null);
     }
 
-    render() {
-        return (
-            <div>
-                <button className="button" onClick={() => this.openModal()}>LOG IN</button>
+    /* 
+                loginError={{
+                    label: "Couldn't sign in, please try again."
+                }}
+                registerError={{
+                    label: "Couldn't sign up, please try again."
+                }}
+                startLoading={this.startLoading.bind(this)}
+                finishLoading={this.finishLoading.bind(this)} */
 
-                <ReactModalLogin
-                    visible={this.state.showModal}
-                    onCloseModal={this.closeModal.bind(this)}
-                    loading={this.state.loading}
-                    error={this.state.error}
-                    tabs={{
-                        afterChange: this.afterTabsChange.bind(this)
-                    }}
-                    loginError={{
-                        label: "Couldn't sign in, please try again."
-                    }}
-                    registerError={{
-                        label: "Couldn't sign up, please try again."
-                    }}
-                    startLoading={this.startLoading.bind(this)}
-                    finishLoading={this.finishLoading.bind(this)}
-                    providers={{
-                        facebook: {
-                            config: facebookConfig,
-                            onLoginSuccess: this.onLoginSuccess.bind(this),
-                            onLoginFail: this.onLoginFail.bind(this),
-                            label: "Continue with Facebook"
-                        },
-                        google: {
-                            config: googleConfig,
-                            onLoginSuccess: this.onLoginSuccess.bind(this),
-                            onLoginFail: this.onLoginFail.bind(this),
-                            label: "Continue with Google"
-                        }
-                    }}
-                />
-            </div>
-        );
-    }
+
+
+    return (
+        <div>
+            <button className="button" onClick={openModal}>LOG IN</button>
+
+            {showModal ? (
+                <StylesModal id="modal-form">
+                    <div className="RML-login-modal-overlay"></div>
+                    <StylesModal className="RML-login-modal-box">
+                        <div className="RML-login-modal-box-content">
+                            <StylesModal className="RML-login-modal-close">
+                                <CloseButton variant="white" aria-label="Close" onClick={closeModal} />
+                            </StylesModal>
+                            <StylesLogSelect>
+                                <button className="logButton" onClick={openSignIn}>LOG IN</button>
+                            </StylesLogSelect>
+                            {showSignIn ? (
+                                <StylesModal className="RML-social-modal-content-wrap">
+                                    <div className="RML-login-modal-form">
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-email">Email</label>
+                                            <input type="email" className="RML-form-control" id="form-email" name="email" placeholder="Email" />
+                                        </div>
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-password">Password</label>
+                                            <input type="password" className="RML-form-control" id="form-password" name="password" placeholder="Password" />
+                                        </div>
+                                        <div class="buttonDiv">
+                                            <button className="RML-btn" id="loginSubmit">LOG IN</button>
+                                        </div>
+                                        <div className="clearfix">
+                                        </div>
+                                        <StylesLogSelect2 classNamme="create-account">
+                                            <button className="logButton2" onClick={openSignUp}>CREATE YOUR ACCOUNT</button>
+                                        </StylesLogSelect2>
+                                    </div>
+                                </StylesModal>) : null}
+                            {showSignUp ? (
+                                <StylesModal className="RML-social-modal-content-wrap">
+                                    <div className="RML-login-modal-form">
+                                        <div className="create-account" >CREATE YOUR ACCOUNT</div>
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-name">Name</label>
+                                            <input type="text" className="RML-form-control" id="form-name" name="name" placeholder="Your name" />
+                                        </div>
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-surname">Surname</label>
+                                            <input type="text" className="RML-form-control" id="form-surname" name="surname" placeholder="Your surname" />
+                                        </div>
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-email">Email</label>
+                                            <input type="email" className="RML-form-control" id="form-email" name="email" placeholder="Email" />
+                                        </div>
+                                        <div className="RML-form-group">
+                                            <label htmlFor="form-password">Password</label>
+                                            <input type="password" className="RML-form-control" id="form-password" name="password" placeholder="Password" />
+                                        </div>
+                                        <div class="buttonDiv">
+                                            <button className="RML-btn" id="loginSubmit">SIGN UP</button>
+                                        </div>
+                                        <div className="clearfix">
+                                        </div>
+                                    </div>
+                                </StylesModal>
+                            ) : null}
+                        </div>
+                    </StylesModal>
+                </StylesModal>
+            ) : null}
+        </div>
+    );
 }
+
 
 export default LoginModal;
