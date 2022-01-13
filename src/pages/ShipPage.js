@@ -7,6 +7,14 @@ import logo from '../assets/logo_starwars.png';
 import corvette from '../assets/CR90-corvette.jpg';
 import rebel from '../assets/rebel-transport.jpg';
 import star from '../assets/star-destroyer.jpeg';
+import arc from '../assets/arc-170.jpeg';
+import banking from '../assets/banking-clan.jpg';
+import belbullab from '../assets/belbullab.jpg';
+import droid from '../assets/droid-control.jpg';
+import jedi from '../assets/jedi-interceptor.jpeg';
+import naboo from '../assets/naboo-star.jpeg';
+import Vwing from '../assets/V-wing.jpg';
+import Xwing from '../assets/X-wing.jpeg';
 
 const ShipPage = ({ list }) => {
 
@@ -36,6 +44,30 @@ const ShipPage = ({ list }) => {
                 break;
             case 'Rebel transport':
                 e.target.src = rebel;
+                break;
+            case 'arc-170':
+                e.target.src = arc;
+                break;
+            case 'Banking clan frigte':
+                e.target.src = banking;
+                break;
+            case 'Belbullab-22 starfighter':
+                e.target.src = belbullab;
+                break;
+            case 'Droid control ship':
+                e.target.src = droid;
+                break;
+            case 'Jedi Interceptor':
+                e.target.src = jedi;
+                break;
+            case 'Naboo star skiff':
+                e.target.src = naboo;
+                break;
+            case 'V-wing':
+                e.target.src = Vwing;
+                break;
+            case 'X-wing':
+                e.target.src = Xwing;
                 break;
         }
     }

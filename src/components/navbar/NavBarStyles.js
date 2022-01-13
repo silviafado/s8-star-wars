@@ -43,6 +43,16 @@ export const StylesNavEl = styled.li`
         color: #d1cfcf;
         cursor: pointer;
     }
+    & .sc-iCfMLu:hover {
+        color: #d1cfcf;
+    }
+    & .button {
+        all: unset;
+    }
+    & .button:hover {
+        color: #d1cfcf;
+        cursor: pointer;
+    }
 `
 
 export const StylesNavUl = styled.ul`

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react/cjs/react.development';
 import { StylesNav, StylesNavEl, StylesNavUl, StylesNavLi, StylesNavDrop } from '../../components/navbar/NavBarStyles';
 import CloseButton from 'react-bootstrap/CloseButton';
+import LoginModal from '../login/LoginModal';
 
 const NavBar = ({ id, list }) => {
 
@@ -30,6 +31,9 @@ const NavBar = ({ id, list }) => {
                         )}
                     </StylesNavUl>
                 ) : null}
+            </StylesNavEl>
+            <StylesNavEl>
+                <LoginModal />
             </StylesNavEl>
         </StylesNav>
     )
