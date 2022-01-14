@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router';
 import { GlobalStyle, StylesHeader, StylesLogo } from '../styled'
 import { StylesProfile, StylesDiv, StylesSection, StylesImg } from '../components/shipProfile/ShipProfileStyles';
+// Images src for not found on API
 import NavBar from '../components/navbar/NavBar';
 import logo from '../assets/logo_starwars.png';
 import corvette from '../assets/CR90-corvette.jpg';
@@ -16,6 +17,7 @@ import naboo from '../assets/naboo-star.jpeg';
 import Vwing from '../assets/V-wing.jpg';
 import Xwing from '../assets/X-wing.jpeg';
 
+// Exercise 2: ShipPage with image and details for each starship
 const ShipPage = ({ list }) => {
 
     const [num, setNum] = useState();
@@ -33,6 +35,7 @@ const ShipPage = ({ list }) => {
 
     shipNum();
 
+    // Images src for starships without image on the API
     const photoSrc = e => {
         // eslint-disable-next-line
         switch (ship.name) {

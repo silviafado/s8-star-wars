@@ -4,6 +4,7 @@ import { StylesNav, StylesNavEl, StylesNavUl, StylesNavLi, StylesNavDrop } from 
 import CloseButton from 'react-bootstrap/CloseButton';
 import LoginModal from '../login/LoginModal';
 
+// Exercise 5: Navbar component
 const NavBar = ({ id, list }) => {
 
     console.log(id);

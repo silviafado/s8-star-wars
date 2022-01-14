@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Exercise 5: Navbar styling
 export const StylesNav = styled.ul`
     list-style: none;
     height: 60px;

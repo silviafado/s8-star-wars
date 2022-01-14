@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AppContext } from "../../application/provider";
+import { StylesOverlay, StylesModalBox, StylesBoxAnimmation, StylesModal, StylesModalForm, StylesCloseDiv, StylesLogSelect, StlylesLogButton, StylesLogSelect2, StylesContainer, StylesFormGroup, StylesFormInput } from './LoginModalStyles';
+import '../../App.css';
 import 'react-modal-login/dist/react-modal-login.css';
 import CloseButton from 'react-bootstrap/CloseButton';
-import { StylesModal, StylesLogSelect, StylesLogSelect2 } from './LoginModalStyles';
-import '../../App.css';
+import logo from '../../assets/logo_starwars.png';
+import { StylesLogo2 } from '../../styled';
+
+// Exercise 6: Log In and Sign Up in localStorage
+let usersListArray = JSON.parse(localStorage.getItem("usersList"));
+if (!usersListArray) {
+    usersListArray = [];
+}
+console.log("User list", usersListArray);
 
 
 const LoginModal = () => {
     const [showModal, setShowModal] = useState(false);
     const [showSignIn, setShowSignIn] = useState(true);
     const [showSignUp, setShowSignUp] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [isLogin, setIsLogin] = useContext(AppContext);
 
+    console.log("Login status: ", isLogin);
+
+    const newUser = { name: '', surname: '', email: '', password: '' };
+    const data = { email: '', password: '' }
 
     const openModal = () => { setShowModal(true) };
     const closeModal = () => {
         setShowModal(false);
-        setError(null);
     };
     const openSignIn = () => {
         setShowSignIn(true);
@@ -28,110 +40,99 @@ const LoginModal = () => {
     };
 
 
-    const onLoginSuccess = (method, response) => {
-        console.log("logged successfully with " + method);
-    }
+    // Log In
+    const handleLogIn = (event) => {
+        event.preventDefault();
+        const storedList = JSON.parse(localStorage.getItem("usersList"));
+        const loginState = () => {
+            for (let user of storedList) {
+                if (user.email === data.email && user.password === data.password) {
+                    closeModal();
+                    console.log('You are logged in!');
+                    alert('You are logged in!\nMay the Force be with you!!');
+                    return true;
+                }
+            }
+            return false;
+        };
+        setIsLogin(loginState);
+    };
 
-    const onLoginFail = (method, response) => {
-        console.log("logging failed with " + method);
-        setError({ error: response });
-    }
-
-    const startLoading = () => {
-        setLoading(true);
-    }
-
-    const finishLoading = () => {
-        setLoading(false);
-    }
-
-    const afterTabsChange = () => {
-        setError(null);
-    }
-
-    /* 
-                loginError={{
-                    label: "Couldn't sign in, please try again."
-                }}
-                registerError={{
-                    label: "Couldn't sign up, please try again."
-                }}
-                startLoading={this.startLoading.bind(this)}
-                finishLoading={this.finishLoading.bind(this)} */
-
-
+    // Sign Up
+    const handleSignUp = (event) => {
+        event.preventDefault();
+        usersListArray.push(newUser);
+        console.log(usersListArray);
+        localStorage.setItem("usersList", JSON.stringify(usersListArray));
+        openSignIn();
+    };
 
     return (
         <div>
             <button className="button" onClick={openModal}>LOG IN</button>
 
             {showModal ? (
-                <StylesModal id="modal-form">
-                    <div className="RML-login-modal-overlay"></div>
-                    <StylesModal className="RML-login-modal-box">
-                        <div className="RML-login-modal-box-content">
-                            <StylesModal className="RML-login-modal-close">
+                <>
+                    <StylesOverlay />
+                    <StylesModalBox>
+                        <StylesBoxAnimmation>
+                            <StylesCloseDiv>
                                 <CloseButton variant="white" aria-label="Close" onClick={closeModal} />
-                            </StylesModal>
+                            </StylesCloseDiv>
                             <StylesLogSelect>
-                                <button className="logButton" onClick={openSignIn}>LOG IN</button>
+                                <StlylesLogButton onClick={openSignIn}>LOG IN</StlylesLogButton>
                             </StylesLogSelect>
                             {showSignIn ? (
-                                <StylesModal className="RML-social-modal-content-wrap">
-                                    <div className="RML-login-modal-form">
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-email">Email</label>
-                                            <input type="email" className="RML-form-control" id="form-email" name="email" placeholder="Email" />
-                                        </div>
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-password">Password</label>
-                                            <input type="password" className="RML-form-control" id="form-password" name="password" placeholder="Password" />
-                                        </div>
-                                        <div class="buttonDiv">
-                                            <button className="RML-btn" id="loginSubmit">LOG IN</button>
-                                        </div>
-                                        <div className="clearfix">
+                                <StylesModal>
+                                    <StylesModalForm>
+                                        <StylesContainer>
+                                            <StylesLogo2 src={logo} alt="logo" />
+                                        </StylesContainer>
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="email" id="email" name="email" placeholder="Username or Email Address" onChange={(e) => { data.email = e.target.value }} />
+                                        </StylesFormGroup>
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="password" id="password" name="password" placeholder="Password" onChange={(e) => { data.password = e.target.value }} />
+                                        </StylesFormGroup>
+                                        <div className="buttonDiv">
+                                            <button className="RML-btn" id="loginSubmit" onClick={handleLogIn}>LOG IN</button>
                                         </div>
                                         <StylesLogSelect2 classNamme="create-account">
                                             <button className="logButton2" onClick={openSignUp}>CREATE YOUR ACCOUNT</button>
                                         </StylesLogSelect2>
-                                    </div>
+                                    </StylesModalForm>
                                 </StylesModal>) : null}
                             {showSignUp ? (
-                                <StylesModal className="RML-social-modal-content-wrap">
-                                    <div className="RML-login-modal-form">
+                                <StylesModal>
+                                    <StylesModalForm>
+                                        <StylesContainer>
+                                            <StylesLogo2 src={logo} alt="logo" />
+                                        </StylesContainer>
                                         <div className="create-account" >CREATE YOUR ACCOUNT</div>
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-name">Name</label>
-                                            <input type="text" className="RML-form-control" id="form-name" name="name" placeholder="Your name" />
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="text" id="name" name="name" placeholder="Your name" onChange={(e) => { newUser.name = e.target.value }} autoFocus required />
+                                        </StylesFormGroup>
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="text" id="surname" name="surname" placeholder="Your surname" onChange={(e) => { newUser.surname = e.target.value }} required />
+                                        </StylesFormGroup>
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="email" id="email" name="email" placeholder="Email" onChange={(e) => { newUser.email = e.target.value }} required />
+                                        </StylesFormGroup>
+                                        <StylesFormGroup>
+                                            <StylesFormInput type="password" id="password" name="password" placeholder="Password" onChange={(e) => { newUser.password = e.target.value }} />
+                                        </StylesFormGroup>
+                                        <div className="buttonDiv">
+                                            <button className="RML-btn" id="loginSubmit" onClick={handleSignUp}>SIGN UP</button>
                                         </div>
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-surname">Surname</label>
-                                            <input type="text" className="RML-form-control" id="form-surname" name="surname" placeholder="Your surname" />
-                                        </div>
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-email">Email</label>
-                                            <input type="email" className="RML-form-control" id="form-email" name="email" placeholder="Email" />
-                                        </div>
-                                        <div className="RML-form-group">
-                                            <label htmlFor="form-password">Password</label>
-                                            <input type="password" className="RML-form-control" id="form-password" name="password" placeholder="Password" />
-                                        </div>
-                                        <div class="buttonDiv">
-                                            <button className="RML-btn" id="loginSubmit">SIGN UP</button>
-                                        </div>
-                                        <div className="clearfix">
-                                        </div>
-                                    </div>
+                                    </StylesModalForm>
                                 </StylesModal>
                             ) : null}
-                        </div>
-                    </StylesModal>
-                </StylesModal>
+                        </StylesBoxAnimmation>
+                    </StylesModalBox>
+                </>
             ) : null}
         </div>
     );
 }
-
 
 export default LoginModal;

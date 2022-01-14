@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import back from './assets/background-stars-desktop.jpeg';
 import back2 from './assets/background-stars-mobile.jpeg';
 
-// Styling GlobalStyle 
+// Exercise 4: Global styling
 export const GlobalStyle = createGlobalStyle`
     body {
         background-image: url(${back});
@@ -22,6 +22,11 @@ export const StylesHeader = styled.header`
 
 export const StylesLogo = styled.img`
     width: 200px;
+`
+
+export const StylesLogo2 = styled.img`
+    width: 100px;
+    margin-bottom: 20px;
 `
 
 export const StylesHome = styled.div`

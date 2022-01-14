@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// General styling
+// Ship list styling
 export const StylesList = styled.ul`
     list-style: none;
     padding: 0px;

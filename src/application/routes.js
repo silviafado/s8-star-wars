@@ -11,10 +11,11 @@ const Path = () => {
     const [list, setList] = useState([]);
     const [page, setPage] = useState(1);
 
+    // API call to get starships info
     useEffect(() => {
         axios({ url: `https://swapi.py4e.com/api/starships/?page=${page}` })
             .then((response) => {
-                console.log(response.data.results);
+                console.log('Starships list: ', response.data.results);
                 setList(response.data.results);
             })
             .catch((error) => {

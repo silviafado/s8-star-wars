@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo_starwars.png'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
+
+// Exercise 1: Formatted component to load ship list on ListPage
 const ShipsList = ({ list, page, setPage }) => {
 
+    // Exercise 3: Get more starships with pagination
     const next = () => { if (page < 4) setPage(page + 1) };
 
     const formattedList = list.map((ship, id) =>
@@ -26,7 +29,7 @@ const ShipsList = ({ list, page, setPage }) => {
             </StylesHeader>
             <StylesList list={list}>
                 <InfiniteScroll
-                    dataLength={list.length} //This is important field to render the next data
+                    dataLength={list.length}
                     next={next}
                     hasMore={true}>
                     {formattedList}

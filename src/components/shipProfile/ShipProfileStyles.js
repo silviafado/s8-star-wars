@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-// General styling
+// Ship profile styling
 export const StylesProfile = styled.div`
     color: white;
         margin: 15%;
